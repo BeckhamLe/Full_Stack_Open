@@ -3,6 +3,15 @@ sequenceDiagram
     participant browser
     participant server
 
+    Note right of browser: After the user types in the content for the new note and hits the save button it creates a HTTP Post request as follows
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    server-->>browser: HTTP Status Code 302
+    deactivate server
+
+    Note right of browser: The browser sees the Code 302 and refreshes the page retrieving the updated html along with the css, js, and json file
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
     server-->>browser: HTML document
