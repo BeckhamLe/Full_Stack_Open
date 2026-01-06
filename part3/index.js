@@ -23,12 +23,12 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>');
 });
 
-// HANDLES ALL HTTP REQUESTS SEEKING ALL NOTES
+// HANDLES ALL HTTP REQUESTS GETTING ALL NOTES
 app.get('/api/notes', (request, response) => {
   response.json(notes);
 });
 
-// HANDLES ALL HTTP REQUESTS FOR SPECIFIC NOTES
+// HANDLES ALL HTTP REQUESTS FOR GETTING SPECIFIC NOTES
 app.get('/api/notes/:id', (request, response) => {
   const id = request.params.id; // variable to access the id parameter in the route of a request
   const note = notes.find((note) => note.id === id);
@@ -42,7 +42,7 @@ app.get('/api/notes/:id', (request, response) => {
 });
 
 // HANDLES ALL HTTP REQUESTS FOR DELETING A NOTE
-app.delete('api/notes/:id', (request, response) => {
+app.delete('/api/notes/:id', (request, response) => {
   const id = request.params.id;
   notes = notes.filter((note) => note.id != id); // filter and only keep notes that aren't the note wanting to be removed
 
