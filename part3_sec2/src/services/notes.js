@@ -1,9 +1,6 @@
 import axios from 'axios';
 const baseUrl = 'http://localhost:3001/api/notes';
 
-const cors = require('cors')
-App.use(cors())
-
 const getAll = () => {
   const request = axios.get(baseUrl);
 

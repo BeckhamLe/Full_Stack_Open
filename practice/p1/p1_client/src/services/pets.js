@@ -13,4 +13,10 @@ const deletePet = (id) => {
     return request.then((response) => response.data)
 }
 
-export default { getAll, deletePet }
+// Sends a request to server to add a new pet
+const createPet = (newPet) => {
+    const request = axios.post(baseUrl, newPet) // request that has URL to send to and new pet object for the body of the request
+    return request.then((response) => response.data)    // if promise is successful, get json data of new pet made
+}
+
+export default { getAll, deletePet, createPet }

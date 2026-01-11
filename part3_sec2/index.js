@@ -3,6 +3,9 @@ const app = express(); // create an express app and store it in variable app
 
 app.use(express.json()) // activates json-parser to access data easily
 
+const cors = require('cors')
+app.use(cors())
+
 let notes = [
   {
     id: '1',
