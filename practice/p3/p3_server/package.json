@@ -1,0 +1,17 @@
+{
+  "name": "p3_server",
+  "version": "1.0.0",
+  "description": "practice 3 react and express server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Beckham Le",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  }
+}

@@ -1,0 +1,8 @@
+POST http://localhost:3001/aritzia/workers
+Content-Type: application/json
+
+{
+    "name": "Jonathan Filmore",
+    "age": "27",
+    "position": "stylist advisor"
+}
