@@ -1,33 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
+import workersServices from './services/workers.js'
+import Worker from './components/Worker.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [workers, setWorkers] = useState([])
+  const [findWorker, setFindWorker] = useState({})
+
+  useEffect(() => {
+    workersServices.getAll().then((initialWorkers) => {
+      setWorkers(initialWorkers)
+    })
+    console.log("Imported Initial Workers")
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div id="workers">
+        {workers.map((worker) => (
+          <div>
+            <h3>{worker.id}</h3>
+            <Worker name={worker.name} age={worker.age} position={worker.position}/>  
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
