@@ -35,7 +35,7 @@ const App = () => {
 
   // event handler to toggle/change the importance of a note
   const toggleImportanceOf = (id) => {
-    const url = `http://localhost:3001/notes/${id}`; // defines the unique URL for each note resource based on its lid
+    const url = `http://localhost:3001/notes/${id}`; // defines the unique URL for each note resource based on its id
     const note = notes.find((n) => n.id === id); // use array find method to find note to modify
     const changedNote = { ...note, important: !note.important }; // create a new object that is an exact copy of the old note but with the important property flipped from what it currently is
     // (...note = object spread syntax to create new object)
