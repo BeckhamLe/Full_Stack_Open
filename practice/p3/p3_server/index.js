@@ -38,9 +38,11 @@ app.get('/aritzia/workers/:id', (request, response) => {
     const worker = workers.find((person) => person.id === id)
 
     if(worker) {
-        response.json(worker)   // return worker in json format
+        response.json(worker)   // return worker in json format if search was successful
     } else {
-        response.status(404).end()  // error, couldn't find specific person at id
+        response.status(404).json({
+            error: "Worker Doesn't Exist"   // if not found, return back error with set error message
+        })
     }
 })
 

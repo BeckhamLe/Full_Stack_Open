@@ -7,9 +7,10 @@ const getAll = () => {
     return request.then((response) => response.data)
 }
 
+// REQUEST TO GET A WORKER
 const getOne = (id) => {
     const request = axios.get(`${baseUrl}/${id}`)
-    return request.then((response) => response.data)
+    return request.then((response) => response.data)    // returns worker if found or if error rethrow error for App.jsx
 }
 
 export default { getAll, getOne }
