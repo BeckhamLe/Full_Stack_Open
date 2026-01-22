@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import workersServices from './services/workers.js'
 import Worker from './components/Worker.jsx'
 import Notification from './components/Notification.jsx'
+import Footer from './components/Footer.jsx'
 
 function App() {
   const [workers, setWorkers] = useState([])
@@ -26,11 +27,14 @@ function App() {
     // Check if worker exists
     workersServices.getOne(findWorkerId)
       .then(
-        (returnedWorker) => setOneWorker(returnedWorker)  // if found, set worker to state to be displayed
+        (returnedWorker) => setOneWorker(returnedWorker)  // if get request successful, set worker to state to be displayed
       )
       .catch(
         (err) => {
           setErrorMessage(err.response?.data?.error)  // if error was returned instead, set error message to state to be displayed
+          setTimeout(() => {  // set a timer for how long error msg is displayed
+            setErrorMessage(null) // set error msg to null so on rerender it disappears
+          }, 5000)  // time limit of 5 sec
         }
       )
   }
@@ -63,6 +67,7 @@ function App() {
         <p>{oneWorker.age}</p>
         <p>{oneWorker.position}</p>
       </div>
+      <Footer />
     </>
   )
 }
