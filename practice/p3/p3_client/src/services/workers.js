@@ -13,4 +13,10 @@ const getOne = (id) => {
     return request.then((response) => response.data)    // returns worker if found or if error rethrow error for App.jsx
 }
 
-export default { getAll, getOne }
+// REQUEST TO ADD A NEW WORKER TO SERVER
+const add = (newWorker) => {
+    const request = axios.post(baseUrl, newWorker)
+    return request.then((response) => response.data)
+}
+
+export default { getAll, getOne, add }
