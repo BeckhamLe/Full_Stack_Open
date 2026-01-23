@@ -9,7 +9,8 @@ function App() {
   const [oneWorker, setOneWorker] = useState({name: "Worker Name", age:"worker age", position: "Worker Position"})
   const [findWorkerId, setFindWorkerId] = useState("...enter worker id")
   const [errorFlag, setErrorFlag] = useState(false)
-  const [message, setMessage] = useState(null)
+  const [searchMessage, setSearchMessage] = useState(null)
+  const [addMessage, setAddMessage] = useState(null)
   const [newWorkerName, setNewWorkerName] = useState("...enter new worker name")
   const [newWorkerAge, setNewWorkerAge] = useState("...enter new worker age")
   const [newWorkerPosition, setNewWorkerPosition] = useState("...enter new worker position")
@@ -27,7 +28,7 @@ function App() {
   // Search for specific worker functionality
   const findWorker = (event) => {
     event.preventDefault()  // prevent default submit functionality
-    setMessage(null) // clear out any previous error messages
+    setSearchMessage(null)  // clear any previous messages
 
     // Check if worker exists
     workersServices.getOne(findWorkerId)
@@ -38,9 +39,9 @@ function App() {
         (err) => {
           setErrorFlag(true)  // turn error flag on to indicate that error msg needs to be displayed
           setOneWorker({name: "", age: "", position: ""}) // clear info on previous worker searched and set it to blank since person currently searched doesn't exist
-          setMessage(err.response?.data?.error)  // if error was returned instead, set error message to state to be displayed
+          setSearchMessage(err.response?.data?.error)  // if error was returned instead, set error message to state to be displayed
           setTimeout(() => {  // set a timer for how long error msg is displayed
-            setMessage(null) // set error msg to null so on rerender it disappears
+            setErrorMessage(null) // set error msg to null so on rerender it disappears
           }, 5000)  // time limit of 5 sec
         }
       )
@@ -54,14 +55,14 @@ function App() {
   // -----------------------------------------------------------------------------------------
 
   // Add a new worker functionality
-  const addWorker = (name, age, position) => {
+  const addWorker = (event) => {
     event.preventDefault()
-    setMessage(null) // clear out any previous error messages
+    setAddMessage(null) // clear any previous messages
 
     const worker = {
-      name: name,
-      age: age,
-      position: position
+      name: newWorkerName,
+      age: newWorkerAge,
+      position: newWorkerPosition
     }
 
     workersServices.add(worker)
@@ -76,18 +77,21 @@ function App() {
 
           // Turn flag off since no error
           setErrorFlag(false)
-          setMessage(`Added ${returnedWorker.name}`)  // set success message
+
+          console.log(errorFlag)
+
+          setAddMessage(`Added ${returnedWorker.name}`)  // set success message
           setTimeout(() => {
-            setMessage(null)  // clear message state after 5 seconds
+            setAddMessage(null)  // clear message state after 5 seconds
           }, 5000)
         }
       )
       .catch(
         (err) => {
           setErrorFlag(true)
-          setMessage(err.response?.data?.error)
+          setAddMessage(err.response?.data?.error)
           setTimeout(() => {
-            setMessage(null)
+            setAddMessage(null)
           }, 5000)
         }
       )
@@ -131,8 +135,7 @@ function App() {
       </form>
       <br/>
       <div>
-        {console.log(`message: ${message}`)}
-        <Notification message={message} flag={errorFlag} />
+        <Notification message={searchMessage} flag={errorFlag} />
         <p>{oneWorker.name}</p>
         <p>{oneWorker.age}</p>
         <p>{oneWorker.position}</p>
@@ -151,7 +154,8 @@ function App() {
         <br/>
         <button type='submit'>Add</button>
         <br />
-        <Notification message={message} flag={errorFlag} />
+        <br/>
+        <Notification message={addMessage} flag={errorFlag} />
       </form>
 
       <Footer />

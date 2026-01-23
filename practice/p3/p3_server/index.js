@@ -77,9 +77,11 @@ app.delete('/aritzia/workers/:id', (request, response) => {
 
 // ADDING A WORKER
 app.post('/aritzia/workers', (request, response) => {
+    console.log("Trying to add worker")
     const body = request.body
 
     if(!body.name || !body.age || !body.position) {
+        console.log("bad request")
         return response.status(400).json({
             error: "content missing"
         })
@@ -94,6 +96,7 @@ app.post('/aritzia/workers', (request, response) => {
 
     workers = workers.concat(new_worker)
     response.json(new_worker)
+    console.log("success")
 })
 
 const PORT = 3001
