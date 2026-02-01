@@ -3,20 +3,23 @@ interface MultiplyValues {
     value2: number;
 }
 
+// Function to get user inputted values in command line
 const parseArguments = (args: string[]): MultiplyValues => {
     if(args.length < 4) throw new Error('Not enough arguments');
     if(args.length > 4) throw new Error('Too many arguments');
 
+    // Checks if values inputted into command line are numbers
     if(!isNaN(Number(args[2])) && !isNaN(Number(args[3]))){
         return {
-            value1: Number(args[2]),
+            value1: Number(args[2]),    // if so set values of numbers to multiply 
             value2: Number(args[3])
         }
     } else {
-        throw new Error('Provided values were not numbers!');
+        throw new Error('Provided values were not numbers!');   // if not throw error
     }
 }
 
+// Multiplying Function
 const multiplicator = (a: number, b: number, printText: string) => {
   console.log(printText,  a * b);
 }

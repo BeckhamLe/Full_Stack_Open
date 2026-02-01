@@ -1,4 +1,10 @@
-// setting up structure of object of return values to be returned
+// setting up type structure for the command line argument values
+interface exerciseArgs {
+    schedule: number[];     // array of CLI values from index 2 till the 2nd to last index
+    target: number;         //last value in CLI 
+}
+
+// setting up structure of labels of what value type goes to which one for the exercise calculator results
 interface Result {
     periodLength: number,
     trainingDays: number,
@@ -7,6 +13,25 @@ interface Result {
     success: boolean,
     rating: number,
     ratingDescription: string
+}
+
+// Function to parse CLI values
+const parseArgumentsExercise = (args: string[]): exerciseArgs => {
+    let newSched: number[] = []     // new array for storing the weekly schedule hours from CLI
+    
+    // Loop through all values of weekly schedule hrs from CLI 
+    for (let i=2; i < args.length-1; i++) {
+        if(!isNaN(Number(args[i]))){                // if value at index is a number: 
+            newSched = newSched.concat(Number(args[i]))     // then add that value to the array
+        } else {
+            throw new Error("One of the values provided isn't a number")    // if not a number --> throw error
+        }
+    }
+
+    return {
+        schedule: newSched,
+        target: Number(args[args.length-1])
+    }
 }
 
 // Calculating all exercise result values to be returned
@@ -54,4 +79,13 @@ const calcExercise = (schedule: number[], targetVal: number): Result => {
     }
 }
 
-console.log(calcExercise([3, 0, 2, 4.5, 0, 3, 1], 2))
+try{
+    const {schedule, target} = parseArgumentsExercise(process.argv)     // create an object to hold the array for schedule and the value for target that will be provided by the function ran here
+    console.log(calcExercise(schedule, target))
+} catch(err) {
+    let errorMessage = "Something bad happened. "
+    if(err instanceof Error){
+        errorMessage += `Error: ${err.message}`
+    }
+    console.log(errorMessage)
+}
